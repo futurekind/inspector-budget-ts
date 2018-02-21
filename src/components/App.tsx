@@ -13,14 +13,14 @@ class App extends React.Component<any> {
                     <Menu.Item
                         name="accounts"
                         onClick={this.handleMenuClick}
-                        active={location.pathname === '/accounts'}
+                        active={location.pathname.indexOf('/accounts') > -1}
                     >
                         Accounts
                     </Menu.Item>
                     <Menu.Item
                         name="budgets"
                         onClick={this.handleMenuClick}
-                        active={location.pathname === '/budgets'}
+                        active={location.pathname.indexOf('/budgets') > -1}
                     >
                         Budgets
                     </Menu.Item>
