@@ -35,4 +35,22 @@ describe('Accounts Selectors', () => {
             expect(selectors.getResults(state)).toEqual(state.accounts.results);
         });
     });
+
+    describe('makeSortedResults', () => {
+        it('returns function', () => {
+            const getResultsSortedBy = selectors.makeSortedResults(state);
+
+            expect(getResultsSortedBy('name')).toEqual([
+                'acc2',
+                'acc3',
+                'acc1',
+            ]);
+
+            expect(getResultsSortedBy('name', -1)).toEqual([
+                'acc1',
+                'acc3',
+                'acc2',
+            ]);
+        });
+    });
 });
