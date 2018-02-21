@@ -19,7 +19,9 @@ export const makeSortedResults = (state: Store) => (
         .sort((a, b) => {
             const valA = state.accounts.entities[a][field];
             const valB = state.accounts.entities[b][field];
-            if (valA > valB) return dir;
+            if (valA > valB) {
+                return dir;
+            }
 
             return dir * -1;
         });

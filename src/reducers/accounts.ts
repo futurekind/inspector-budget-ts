@@ -10,13 +10,17 @@ export default (
     state: State = initialState,
     action?: actions.Action
 ): State => {
-    if (!action) return state;
+    if (!action) {
+        return state;
+    }
 
     const { type, payload } = action;
 
     switch (type) {
         case actions.ACCOUNT__CREATE:
-            if (typeof payload === 'string') return state;
+            if (typeof payload === 'string') {
+                return state;
+            }
 
             return {
                 ...state,
@@ -28,7 +32,9 @@ export default (
             };
 
         case actions.ACCOUNT__UPDATE:
-            if (typeof payload === 'string') return state;
+            if (typeof payload === 'string') {
+                return state;
+            }
             return {
                 ...state,
                 entities: {
@@ -41,7 +47,9 @@ export default (
             };
 
         case actions.ACCOUNT__DELETE:
-            if (typeof payload === 'object') return state;
+            if (typeof payload === 'object') {
+                return state;
+            }
 
             const index = state.results.indexOf(payload);
 
@@ -52,7 +60,9 @@ export default (
                     ...state.results.slice(index + 1),
                 ],
                 entities: Object.keys(state.entities).reduce((acc, key) => {
-                    if (key === payload) return acc;
+                    if (key === payload) {
+                        return acc;
+                    }
 
                     return {
                         ...acc,
