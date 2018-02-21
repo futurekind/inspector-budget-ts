@@ -36,6 +36,14 @@ describe('Accounts Selectors', () => {
         });
     });
 
+    describe('getResults()', () => {
+        it('returns state', () => {
+            expect(selectors.getEntities(state)).toEqual(
+                state.accounts.entities
+            );
+        });
+    });
+
     describe('makeSortedResults', () => {
         it('returns function', () => {
             const getResultsSortedBy = selectors.makeSortedResults(state);
