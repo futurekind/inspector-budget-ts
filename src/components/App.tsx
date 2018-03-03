@@ -1,7 +1,11 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, Route } from 'react-router-dom';
 
+// Semantic UI
 import { Menu } from 'semantic-ui-react';
+
+// Pages
+import Accounts from './pages/Accounts';
 
 interface Props extends RouteComponentProps<any> {}
 
@@ -27,6 +31,8 @@ class App extends React.Component<Props> {
                         Budgets
                     </Menu.Item>
                 </Menu>
+
+                <Route path="/accounts" component={Accounts} />
             </React.Fragment>
         );
     }
