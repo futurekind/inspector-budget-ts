@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Menu } from 'semantic-ui-react';
 
-class App extends React.Component<any> {
+interface Props extends RouteComponentProps<any> {}
+
+class App extends React.Component<Props> {
     render() {
         const { location } = this.props;
 
