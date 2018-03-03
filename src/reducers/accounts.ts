@@ -2,8 +2,30 @@ import { State } from '../types/account';
 import * as actions from '../actions/accounts';
 
 export const initialState: State = {
-    results: [],
-    entities: {},
+    results: ['acc1', 'acc2', 'acc3'],
+    entities: {
+        acc1: {
+            id: 'acc1',
+            name: 'Sparkasse',
+            balance: 123.4,
+            createdAt: '',
+            updatedAt: '',
+        },
+        acc2: {
+            id: 'acc2',
+            name: 'Mastercard',
+            balance: -67.89,
+            createdAt: '',
+            updatedAt: '',
+        },
+        acc3: {
+            id: 'acc3',
+            name: 'Ing Diba',
+            balance: 0,
+            createdAt: '',
+            updatedAt: '',
+        },
+    },
 };
 
 export default (state: State = initialState, action: actions.Action): State => {

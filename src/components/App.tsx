@@ -17,7 +17,7 @@ class App extends React.Component<Props> {
             <React.Fragment>
                 <Menu pointing={true} size="massive" stackable={true}>
                     <Menu.Item
-                        name="accounts"
+                        name="accounts/index"
                         onClick={this.handleMenuClick}
                         active={location.pathname.indexOf('/accounts') > -1}
                     >
@@ -32,7 +32,7 @@ class App extends React.Component<Props> {
                     </Menu.Item>
                 </Menu>
 
-                <Route path="/accounts" component={Accounts} />
+                <Route path="/accounts/:id" component={Accounts} />
             </React.Fragment>
         );
     }
