@@ -6,6 +6,7 @@ describe('Accounts Reducer', () => {
     let state: State;
 
     it('returns initial state', () => {
+        // @ts-ignore
         state = reducer(undefined);
         expect(state).toEqual(initialState);
     });

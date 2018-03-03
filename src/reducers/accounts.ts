@@ -6,14 +6,7 @@ export const initialState: State = {
     entities: {},
 };
 
-export default (
-    state: State = initialState,
-    action?: actions.Action
-): State => {
-    if (!action) {
-        return state;
-    }
-
+export default (state: State = initialState, action: actions.Action): State => {
     const { type, payload } = action;
 
     switch (type) {
