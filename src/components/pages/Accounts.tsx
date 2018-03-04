@@ -7,10 +7,15 @@ import { Account } from '../../types/account';
 import { Store } from '../../types/store';
 
 // Sematic UI
-import { Container } from 'semantic-ui-react';
-import { Grid } from 'semantic-ui-react';
-import { Menu } from 'semantic-ui-react';
-import { Label } from 'semantic-ui-react';
+import {
+    Container,
+    Grid,
+    Menu,
+    Label,
+    Button,
+    Icon,
+    Modal,
+} from 'semantic-ui-react';
 
 // Selectors
 import * as accountSelectors from '../../selectors/accounts';
@@ -24,9 +29,32 @@ interface MapStateProps {
     };
 }
 interface Props extends MapStateProps, RouteComponentProps<any> {}
-class Accounts extends React.Component<Props> {
+
+interface State {
+    createDialog: boolean;
+}
+class Accounts extends React.Component<Props, State> {
+    state = {
+        createDialog: false,
+    };
+
     render() {
+        const { match } = this.props;
         const { results } = this.props.accounts;
+
+        const DeleteButton = (props: { show: boolean }) => {
+            if (!props.show) return null;
+            return (
+                <Button icon={true}>
+                    <Icon name="minus" />
+                </Button>
+            );
+        };
+
+        const handleCreateDialog = () =>
+            this.setState({
+                createDialog: true,
+            });
 
         return (
             <Container>
@@ -35,12 +63,28 @@ class Accounts extends React.Component<Props> {
                         <Menu pointing={true} vertical={true} fluid={true}>
                             {results.map(this.renderAccountMenuItem)}
                         </Menu>
+
+                        <Container textAlign="right">
+                            <Button.Group basic={true}>
+                                <DeleteButton
+                                    show={match.params.id !== 'index'}
+                                />
+                                <Button
+                                    icon={true}
+                                    onClick={handleCreateDialog}
+                                >
+                                    <Icon name="plus" />
+                                </Button>
+                            </Button.Group>
+                        </Container>
                     </Grid.Column>
 
                     <Grid.Column mobile={16} tablet={11}>
                         Hallo
                     </Grid.Column>
                 </Grid>
+
+                {this.renderCreateDialog()}
             </Container>
         );
     }
@@ -68,6 +112,21 @@ class Accounts extends React.Component<Props> {
             </Menu.Item>
         );
     };
+
+    renderCreateDialog() {
+        const { createDialog } = this.state;
+
+        const handleClose = () =>
+            this.setState({
+                createDialog: false,
+            });
+
+        return (
+            <Modal open={createDialog} onClose={handleClose}>
+                <Modal.Header>Hallo</Modal.Header>
+            </Modal>
+        );
+    }
 
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
         const { name } = props;
