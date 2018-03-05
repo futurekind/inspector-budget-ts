@@ -24,11 +24,15 @@ const AccountData: React.StatelessComponent<Props> = props => {
     const title = props.accountData.id ? 'Edit Account' : 'Create Account';
 
     return (
-        <Modal open={props.open} onClose={props.onClose}>
+        <Modal
+            open={props.open}
+            onClose={props.onClose}
+            closeOnDimmerClick={false}
+        >
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
                 <Grid>
-                    <Grid.Column tablet={8}>
+                    <Grid.Column mobile={16} tablet={8} computer={8}>
                         <Input
                             name="name"
                             fluid={true}
@@ -37,7 +41,7 @@ const AccountData: React.StatelessComponent<Props> = props => {
                             value={props.accountData.name}
                         />
                     </Grid.Column>
-                    <Grid.Column tablet={8}>
+                    <Grid.Column mobile={16} tablet={8} computer={8}>
                         <Input
                             name="balance"
                             type="number"

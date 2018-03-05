@@ -83,7 +83,7 @@ class Accounts extends React.Component<Props, State> {
         return (
             <Container>
                 <Grid>
-                    <Grid.Column mobile={16} tablet={5}>
+                    <Grid.Column mobile={16} tablet={5} computer={5}>
                         <Header sub={true}>Accounts</Header>
                         <Menu pointing={true} vertical={true} fluid={true}>
                             {results.map(this.renderAccountMenuItem)}
@@ -107,7 +107,7 @@ class Accounts extends React.Component<Props, State> {
                         </Container>
                     </Grid.Column>
 
-                    <Grid.Column mobile={16} tablet={11}>
+                    <Grid.Column mobile={16} tablet={11} computer={11}>
                         <Header sub={true}>Transactions</Header>
                     </Grid.Column>
 
