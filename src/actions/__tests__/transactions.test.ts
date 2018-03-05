@@ -29,4 +29,39 @@ describe('Transactions Actions', () => {
             });
         });
     });
+
+    describe('update()', () => {
+        it('returns action', () => {
+            expect(
+                actions.update(
+                    {
+                        accountId: 'a1',
+                        categoryId: 'c1',
+                        cleared: false,
+                        createdAt: '',
+                        date: '',
+                        id: 'ta1',
+                        updatedAt: '',
+                        volume: 1.23,
+                    },
+                    0.12
+                )
+            ).toEqual({
+                type: actions.TA__UPDATE,
+                payload: {
+                    transaction: {
+                        accountId: 'a1',
+                        categoryId: 'c1',
+                        cleared: false,
+                        createdAt: '',
+                        date: '',
+                        id: 'ta1',
+                        updatedAt: '',
+                        volume: 1.23,
+                    },
+                    prevVolume: 0.12,
+                },
+            });
+        });
+    });
 });
