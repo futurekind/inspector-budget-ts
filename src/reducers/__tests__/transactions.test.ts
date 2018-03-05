@@ -30,9 +30,25 @@ describe('Transactions Reducer', () => {
             },
         });
 
+        state = reducer(state, {
+            type: actions.TA__CREATE,
+            payload: {
+                accountId: 'a1',
+                categoryId: 'c1',
+                cleared: false,
+                createdAt: '',
+                date: '',
+                id: 'ta2',
+                payeeId: '',
+                text: '',
+                updatedAt: '',
+                volume: 15,
+            },
+        });
+
         expect(state).toEqual({
             ...prevState,
-            results: ['ta1'],
+            results: ['ta1', 'ta2'],
             entities: {
                 ta1: {
                     accountId: 'a1',
@@ -45,6 +61,18 @@ describe('Transactions Reducer', () => {
                     text: '',
                     updatedAt: '',
                     volume: 123,
+                },
+                ta2: {
+                    accountId: 'a1',
+                    categoryId: 'c1',
+                    cleared: false,
+                    createdAt: '',
+                    date: '',
+                    id: 'ta2',
+                    payeeId: '',
+                    text: '',
+                    updatedAt: '',
+                    volume: 15,
                 },
             },
         });
@@ -88,6 +116,26 @@ describe('Transactions Reducer', () => {
                     updatedAt: '',
                     volume: 12.3,
                 },
+            },
+        });
+    });
+
+    it(`handles ${actions.TA__DELETE}`, () => {
+        const prevState = state;
+
+        state = reducer(prevState, {
+            type: actions.TA__DELETE,
+            payload: {
+                transactionId: 'ta1',
+                volume: 12.3,
+            },
+        });
+
+        expect(state).toEqual({
+            ...prevState,
+            results: ['ta2'],
+            entities: {
+                ta2: prevState.entities.ta2,
             },
         });
     });

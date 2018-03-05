@@ -38,6 +38,27 @@ export default (
             };
         }
 
+        case taActions.TA__DELETE: {
+            const payload = <taActions.TransactionIdWithVolumne>action.payload;
+            const index = state.results.indexOf(payload.transactionId);
+
+            return {
+                ...state,
+                results: [
+                    ...state.results.slice(0, index),
+                    ...state.results.slice(index + 1),
+                ],
+                entities: Object.keys(state.entities).reduce((acc, key) => {
+                    if (key === payload.transactionId) return acc;
+
+                    return {
+                        ...acc,
+                        [key]: state.entities[key],
+                    };
+                }, {}),
+            };
+        }
+
         default:
             return state;
     }
