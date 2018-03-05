@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import * as numeral from 'numeral';
 
 // Types
 import { Account } from '../../types/account';
@@ -141,7 +142,7 @@ class Accounts extends React.Component<Props, State> {
             >
                 {account.name}
                 <Label horizontal={true} color={labelColor}>
-                    {account.balance}
+                    {numeral(account.balance).format('0,00.00')}
                 </Label>
             </Menu.Item>
         );
