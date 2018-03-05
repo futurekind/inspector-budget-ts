@@ -9,18 +9,19 @@ export type TA__UPDATE = typeof TA__UPDATE;
 export const TA__DELETE = 'TA__DELETE';
 export type TA__DELETE = typeof TA__DELETE;
 
+export interface TransactionWithPrevVolume {
+    transaction: Transaction;
+    prevVolume: number;
+}
+
+export interface TransactionIdWithVolumne {
+    transactionId: string;
+    volume: number;
+}
+
 export interface Action {
     type: TA__CREATE | TA__UPDATE | TA__DELETE;
-    payload:
-        | Transaction
-        | {
-              transaction: Transaction;
-              prevVolume: number;
-          }
-        | {
-              transactionId: string;
-              volume: number;
-          };
+    payload: Transaction | TransactionWithPrevVolume | TransactionIdWithVolumne;
 }
 
 export const create = (transaction: Transaction): Action => ({

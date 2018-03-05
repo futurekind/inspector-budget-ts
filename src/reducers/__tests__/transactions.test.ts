@@ -49,4 +49,46 @@ describe('Transactions Reducer', () => {
             },
         });
     });
+
+    it(`handles ${actions.TA__UPDATE}`, () => {
+        const prevState = state;
+
+        state = reducer(prevState, {
+            type: actions.TA__UPDATE,
+            payload: {
+                transaction: {
+                    accountId: 'a1',
+                    categoryId: 'c1',
+                    cleared: false,
+                    createdAt: '',
+                    date: '',
+                    id: 'ta1',
+                    payeeId: '',
+                    text: 'Some text',
+                    updatedAt: '',
+                    volume: 12.3,
+                },
+                prevVolume: 123,
+            },
+        });
+
+        expect(state).toEqual({
+            ...prevState,
+            entities: {
+                ...prevState.entities,
+                ta1: {
+                    accountId: 'a1',
+                    categoryId: 'c1',
+                    cleared: false,
+                    createdAt: '',
+                    date: '',
+                    id: 'ta1',
+                    payeeId: '',
+                    text: 'Some text',
+                    updatedAt: '',
+                    volume: 12.3,
+                },
+            },
+        });
+    });
 });

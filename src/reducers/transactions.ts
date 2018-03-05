@@ -13,7 +13,7 @@ export default (
     const { type } = action;
 
     switch (type) {
-        case taActions.TA__CREATE:
+        case taActions.TA__CREATE: {
             const payload = <Transaction>action.payload;
 
             return {
@@ -24,6 +24,19 @@ export default (
                     [payload.id]: payload,
                 },
             };
+        }
+
+        case taActions.TA__UPDATE: {
+            const payload = <taActions.TransactionWithPrevVolume>action.payload;
+
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [payload.transaction.id]: payload.transaction,
+                },
+            };
+        }
 
         default:
             return state;
