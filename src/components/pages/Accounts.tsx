@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect, DispatchProp } from 'react-redux';
 import { RouteComponentProps, Redirect } from 'react-router-dom';
 import * as numeral from 'numeral';
+import { v4 } from 'uuid';
 
 // Types
 import { Account } from '../../types/account';
@@ -98,6 +99,7 @@ class Accounts extends React.Component<Props, State> {
                     <Grid.Column mobile={16} tablet={5} computer={5}>
                         <Header sub={true}>Accounts</Header>
                         <Menu pointing={true} vertical={true} fluid={true}>
+                            {this.renderZeroAccountResult()}
                             {results.map(this.renderAccountMenuItem)}
                         </Menu>
 
@@ -203,6 +205,13 @@ class Accounts extends React.Component<Props, State> {
         );
     }
 
+    renderZeroAccountResult() {
+        if (!this.props.accounts.results.length)
+            return <Menu.Item>No Accounts</Menu.Item>;
+
+        return null;
+    }
+
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
         const { name } = props;
         const { history } = this.props;
@@ -250,21 +259,33 @@ class Accounts extends React.Component<Props, State> {
 
     handleSaveAccount = () => {
         const { accountData } = this.state;
+        const { history } = this.props;
         const dispatch = this.props.dispatch;
         const shouldCreate = !accountData.id;
 
         if (shouldCreate) {
             if (dispatch) {
+                const id = v4();
+
                 dispatch(
                     accountActions.create({
                         ...accountData,
-                        id: 'acc04',
+                        id,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
                     })
                 );
+
+                history.push(`/accounts/${id}`);
             }
         } else {
             if (dispatch) {
-                dispatch(accountActions.update(accountData));
+                dispatch(
+                    accountActions.update({
+                        ...accountData,
+                        updatedAt: new Date().toISOString(),
+                    })
+                );
             }
         }
 
