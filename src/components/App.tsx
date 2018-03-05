@@ -7,6 +7,8 @@ import { Menu } from 'semantic-ui-react';
 // Pages
 import Accounts from './pages/Accounts';
 
+import './App.css';
+
 interface Props extends RouteComponentProps<any> {}
 
 class App extends React.Component<Props> {
@@ -15,7 +17,13 @@ class App extends React.Component<Props> {
 
         return (
             <React.Fragment>
-                <Menu pointing={true} size="massive" stackable={true}>
+                <Menu
+                    stackable={true}
+                    inverted={true}
+                    size="huge"
+                    className="App__menu"
+                >
+                    <Menu.Item header={true}>Inspector Budget</Menu.Item>
                     <Menu.Item
                         name="accounts/index"
                         onClick={this.handleMenuClick}
