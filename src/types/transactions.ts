@@ -10,3 +10,10 @@ export interface Transaction {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface State {
+    results: string[];
+    entities: {
+        [id: string]: Transaction;
+    };
+}

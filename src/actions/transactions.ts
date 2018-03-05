@@ -9,7 +9,7 @@ export type TA__UPDATE = typeof TA__UPDATE;
 export const TA__DELETE = 'TA__DELETE';
 export type TA__DELETE = typeof TA__DELETE;
 
-interface Action {
+export interface Action {
     type: TA__CREATE | TA__UPDATE | TA__DELETE;
     payload:
         | Transaction
