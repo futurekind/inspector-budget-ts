@@ -298,7 +298,7 @@ class Accounts extends React.Component<Props, State> {
 
 const mapState = (state: Store): MapStateProps => ({
     accounts: {
-        results: accountSelectors.getResults(state),
+        results: accountSelectors.makeSortedResults(state)('createdAt'),
         entities: accountSelectors.getEntities(state),
     },
 });
