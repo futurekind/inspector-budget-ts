@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Redirect } from 'react-router-dom';
 import * as numeral from 'numeral';
 
 // Types
@@ -88,6 +88,9 @@ class Accounts extends React.Component<Props, State> {
                 </Button>
             );
         };
+
+        if (match.params.id === 'index')
+            return <Redirect to={`/accounts/${results[0]}`} />;
 
         return (
             <Container>
