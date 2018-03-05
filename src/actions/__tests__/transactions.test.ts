@@ -64,4 +64,16 @@ describe('Transactions Actions', () => {
             });
         });
     });
+
+    describe('remove()', () => {
+        it('returns action', () => {
+            expect(actions.remove('some-id', 123.45)).toEqual({
+                type: actions.TA__DELETE,
+                payload: {
+                    transactionId: 'some-id',
+                    volume: 123.45,
+                },
+            });
+        });
+    });
 });
