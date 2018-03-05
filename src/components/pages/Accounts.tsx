@@ -16,6 +16,7 @@ import {
     Button,
     Icon,
     Header,
+    Modal,
 } from 'semantic-ui-react';
 
 // Container
@@ -43,6 +44,7 @@ interface Props
 interface State {
     accountDialog: boolean;
     accountData: Account;
+    accountToDelete: string;
 }
 
 const emptyAccount: Account = {
@@ -56,16 +58,22 @@ class Accounts extends React.Component<Props, State> {
     state = {
         accountDialog: false,
         accountData: emptyAccount,
+        accountToDelete: '',
     };
 
     render() {
         const { match } = this.props;
         const { results } = this.props.accounts;
 
+        const handleDelete = () =>
+            this.setState({
+                accountToDelete: match.params.id,
+            });
+
         const DeleteButton = (props: { show: boolean }) => {
             if (!props.show) return null;
             return (
-                <Button icon={true}>
+                <Button icon={true} onClick={handleDelete}>
                     <Icon name="minus" />
                 </Button>
             );
@@ -120,6 +128,8 @@ class Accounts extends React.Component<Props, State> {
                         onSave={this.handleSaveAccount}
                     />
                 </Grid>
+
+                {this.renderDeleteAccountWarning()}
             </Container>
         );
     }
@@ -147,6 +157,48 @@ class Accounts extends React.Component<Props, State> {
             </Menu.Item>
         );
     };
+
+    renderDeleteAccountWarning() {
+        const { accountToDelete } = this.state;
+        const { dispatch } = this.props;
+
+        const handleCancel = () =>
+            this.setState({
+                accountToDelete: '',
+            });
+
+        const handleDelete = () => {
+            if (dispatch) {
+                dispatch(accountActions.remove(accountToDelete));
+            }
+
+            this.setState({
+                accountToDelete: '',
+            });
+        };
+
+        return (
+            <Modal
+                open={accountToDelete !== ''}
+                size="tiny"
+                basic={true}
+                onClose={handleCancel}
+            >
+                <Modal.Header>Delete Account?</Modal.Header>
+                <Modal.Content>
+                    Are you sure you want to delete this account?
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button basic={true} onClick={handleCancel} inverted={true}>
+                        Cancel
+                    </Button>
+                    <Button color="red" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
 
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
         const { name } = props;
