@@ -14,14 +14,9 @@ export interface TransactionWithPrevVolume {
     prevVolume: number;
 }
 
-export interface TransactionIdWithVolumne {
-    transactionId: string;
-    volume: number;
-}
-
 export interface Action {
     type: TA__CREATE | TA__UPDATE | TA__DELETE;
-    payload: Transaction | TransactionWithPrevVolume | TransactionIdWithVolumne;
+    payload: Transaction | TransactionWithPrevVolume;
 }
 
 export const create = (transaction: Transaction): Action => ({
@@ -40,10 +35,7 @@ export const update = (
     },
 });
 
-export const remove = (id: string, volume: number): Action => ({
+export const remove = (transaction: Transaction): Action => ({
     type: TA__DELETE,
-    payload: {
-        transactionId: id,
-        volume,
-    },
+    payload: transaction,
 });

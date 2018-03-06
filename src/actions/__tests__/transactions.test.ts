@@ -67,11 +67,28 @@ describe('Transactions Actions', () => {
 
     describe('remove()', () => {
         it('returns action', () => {
-            expect(actions.remove('some-id', 123.45)).toEqual({
+            expect(
+                actions.remove({
+                    accountId: 'a1',
+                    categoryId: 'c1',
+                    cleared: false,
+                    createdAt: '',
+                    date: '',
+                    id: 'ta1',
+                    updatedAt: '',
+                    volume: 1.23,
+                })
+            ).toEqual({
                 type: actions.TA__DELETE,
                 payload: {
-                    transactionId: 'some-id',
-                    volume: 123.45,
+                    accountId: 'a1',
+                    categoryId: 'c1',
+                    cleared: false,
+                    createdAt: '',
+                    date: '',
+                    id: 'ta1',
+                    updatedAt: '',
+                    volume: 1.23,
                 },
             });
         });

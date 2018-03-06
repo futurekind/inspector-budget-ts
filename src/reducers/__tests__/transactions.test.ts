@@ -126,7 +126,15 @@ describe('Transactions Reducer', () => {
         state = reducer(prevState, {
             type: actions.TA__DELETE,
             payload: {
-                transactionId: 'ta1',
+                accountId: 'a1',
+                categoryId: 'c1',
+                cleared: false,
+                createdAt: '',
+                date: '',
+                id: 'ta1',
+                payeeId: '',
+                text: 'Some text',
+                updatedAt: '',
                 volume: 12.3,
             },
         });

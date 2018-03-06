@@ -39,8 +39,8 @@ export default (
         }
 
         case taActions.TA__DELETE: {
-            const payload = <taActions.TransactionIdWithVolumne>action.payload;
-            const index = state.results.indexOf(payload.transactionId);
+            const payload = <Transaction>action.payload;
+            const index = state.results.indexOf(payload.id);
 
             return {
                 ...state,
@@ -49,7 +49,7 @@ export default (
                     ...state.results.slice(index + 1),
                 ],
                 entities: Object.keys(state.entities).reduce((acc, key) => {
-                    if (key === payload.transactionId) return acc;
+                    if (key === payload.id) return acc;
 
                     return {
                         ...acc,
