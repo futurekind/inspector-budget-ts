@@ -1,10 +1,6 @@
 import { Store } from '../types/store';
 import { Account } from '../types/account';
-
-enum Direction {
-    ASC = 1,
-    DESC = -1,
-}
+import { Direction, makeSortEntitiesBy } from '../utils/entities';
 
 export const getResults = (state: Store): string[] => state.accounts.results;
 export const getEntities = (state: Store): { [id: string]: Account } =>
@@ -16,12 +12,4 @@ export const makeSortedResults = (state: Store) => (
 ): string[] =>
     getResults(state)
         .slice()
-        .sort((a, b) => {
-            const valA = state.accounts.entities[a][field];
-            const valB = state.accounts.entities[b][field];
-            if (valA > valB) {
-                return dir;
-            }
-
-            return dir * -1;
-        });
+        .sort(makeSortEntitiesBy(getEntities(state), field, dir));
