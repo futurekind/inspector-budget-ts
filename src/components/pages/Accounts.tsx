@@ -90,7 +90,7 @@ class Accounts extends React.Component<Props, State> {
             );
         };
 
-        if (match.params.id === 'index')
+        if (match.params.id === 'index' && results.length > 0)
             return <Redirect to={`/accounts/${results[0]}`} />;
 
         return (
@@ -165,7 +165,7 @@ class Accounts extends React.Component<Props, State> {
 
     renderDeleteAccountWarning() {
         const { accountToDelete } = this.state;
-        const { dispatch } = this.props;
+        const { dispatch, history } = this.props;
 
         const handleCancel = () =>
             this.setState({
@@ -180,6 +180,8 @@ class Accounts extends React.Component<Props, State> {
             this.setState({
                 accountToDelete: '',
             });
+
+            history.push('/accounts/index');
         };
 
         return (
