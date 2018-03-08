@@ -18,6 +18,7 @@ import {
     Icon,
     Header,
     Modal,
+    Segment
 } from 'semantic-ui-react';
 
 // Container
@@ -39,8 +40,8 @@ interface MapStateProps {
 }
 interface Props
     extends MapStateProps,
-        DispatchProp<string>,
-        RouteComponentProps<any> {}
+    DispatchProp<string>,
+    RouteComponentProps<any> { }
 
 interface State {
     accountDialog: boolean;
@@ -122,7 +123,11 @@ class Accounts extends React.Component<Props, State> {
                     </Grid.Column>
 
                     <Grid.Column mobile={16} tablet={11} computer={11}>
+
                         <Header sub={true}>Transactions</Header>
+                        <Segment>
+                            {this.renderZeroTransactionResults()}
+                        </Segment>
                     </Grid.Column>
 
                     <AccountData
@@ -212,6 +217,10 @@ class Accounts extends React.Component<Props, State> {
             return <Menu.Item>No Accounts</Menu.Item>;
 
         return null;
+    }
+
+    renderZeroTransactionResults() {
+        return <p>No Transactions</p>
     }
 
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
