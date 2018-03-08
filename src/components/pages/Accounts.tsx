@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 
 // Types
 import { Account } from '../../types/account';
+import { Transaction } from '../../types/transactions';
 import { Store } from '../../types/store';
 
 // Sematic UI
@@ -18,7 +19,7 @@ import {
     Icon,
     Header,
     Modal,
-    Segment
+    Segment,
 } from 'semantic-ui-react';
 
 // Container
@@ -26,6 +27,7 @@ import AccountData from '../container/AccountData';
 
 // Selectors
 import * as accountSelectors from '../../selectors/accounts';
+import * as taSelectors from '../../selectors/transactions';
 
 // Actions
 import * as accountActions from '../../actions/accounts';
@@ -37,11 +39,17 @@ interface MapStateProps {
             [id: string]: Account;
         };
     };
+    transactions: {
+        results: string[];
+        entities: {
+            [id: string]: Transaction;
+        };
+    };
 }
 interface Props
     extends MapStateProps,
-    DispatchProp<string>,
-    RouteComponentProps<any> { }
+        DispatchProp<string>,
+        RouteComponentProps<any> {}
 
 interface State {
     accountDialog: boolean;
@@ -122,13 +130,7 @@ class Accounts extends React.Component<Props, State> {
                         </Container>
                     </Grid.Column>
 
-                    <Grid.Column mobile={16} tablet={11} computer={11}>
-
-                        <Header sub={true}>Transactions</Header>
-                        <Segment>
-                            {this.renderZeroTransactionResults()}
-                        </Segment>
-                    </Grid.Column>
+                    {this.renderTransactions()}
 
                     <AccountData
                         open={this.state.accountDialog}
@@ -220,7 +222,20 @@ class Accounts extends React.Component<Props, State> {
     }
 
     renderZeroTransactionResults() {
-        return <p>No Transactions</p>
+        return <p>No Transactions</p>;
+    }
+
+    renderTransactions() {
+        const { accounts } = this.props;
+
+        if (accounts.results.length === 0) return;
+
+        return (
+            <Grid.Column mobile={16} tablet={11} computer={11}>
+                <Header sub={true}>Transactions</Header>
+                <Segment>{this.renderZeroTransactionResults()}</Segment>
+            </Grid.Column>
+        );
     }
 
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
@@ -311,6 +326,10 @@ const mapState = (state: Store): MapStateProps => ({
     accounts: {
         results: accountSelectors.makeSortedResults(state)('createdAt'),
         entities: accountSelectors.getEntities(state),
+    },
+    transactions: {
+        results: taSelectors.makeGetSortedResults(state)('date'),
+        entities: taSelectors.getEntities(state),
     },
 });
 
