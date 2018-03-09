@@ -25,6 +25,7 @@ import {
 
 // Container
 import AccountData from '../container/AccountData';
+import TransactionData from '../container/TransactionData';
 
 // Selectors
 import * as accountSelectors from '../../selectors/accounts';
@@ -56,6 +57,8 @@ interface State {
     accountDialog: boolean;
     accountData: Account;
     accountToDelete: string;
+    transactionDialog: boolean;
+    transactionData: Transaction;
 }
 
 const emptyAccount: Account = {
@@ -64,6 +67,17 @@ const emptyAccount: Account = {
     balance: 0,
     createdAt: '',
     updatedAt: '',
+};
+
+const emptyTransaction: Transaction = {
+    accountId: '',
+    categoryId: '',
+    cleared: false,
+    createdAt: '',
+    date: '',
+    id: '',
+    updatedAt: '',
+    volume: 0,
 };
 
 const ActionButton = (props: {
@@ -83,13 +97,15 @@ class Accounts extends React.Component<Props, State> {
         accountDialog: false,
         accountData: emptyAccount,
         accountToDelete: '',
+        transactionDialog: false,
+        transactionData: emptyTransaction,
     };
 
     render() {
         const { match } = this.props;
         const { results } = this.props.accounts;
 
-        const handleDelete = () =>
+        const handleDeleteAccount = () =>
             this.setState({
                 accountToDelete: match.params.id,
             });
@@ -111,7 +127,7 @@ class Accounts extends React.Component<Props, State> {
                             <Button.Group basic={true}>
                                 <ActionButton
                                     show={match.params.id !== 'index'}
-                                    onClick={handleDelete}
+                                    onClick={handleDeleteAccount}
                                     iconName="minus"
                                 />
                                 <ActionButton
@@ -136,6 +152,14 @@ class Accounts extends React.Component<Props, State> {
                         accountData={this.state.accountData}
                         onChange={this.handleChangeAccountData}
                         onSave={this.handleSaveAccount}
+                    />
+
+                    <TransactionData
+                        open={this.state.transactionDialog}
+                        onChange={this.handleChangeTransactionData}
+                        onClose={this.handleCloseTransactionDialog}
+                        transactionData={this.state.transactionData}
+                        onSave={this.handleSaveTransaction}
                     />
                 </Grid>
 
@@ -237,7 +261,7 @@ class Accounts extends React.Component<Props, State> {
                     <Button.Group basic={true}>
                         <ActionButton
                             show={true}
-                            onClick={this.handleOpenCreateAccountDialog}
+                            onClick={this.handleOpenCreateTransactionDialog}
                             iconName="plus"
                         />
                     </Button.Group>
@@ -267,10 +291,31 @@ class Accounts extends React.Component<Props, State> {
         });
     };
 
+    handleChangeTransactionData = (
+        e: any,
+        props: { type: 'string' | 'number'; name: string; value: string }
+    ) => {
+        const { name, value, type } = props;
+
+        this.setState({
+            transactionData: {
+                ...this.state.transactionData,
+                [name]: type === 'number' ? parseFloat(value) : value,
+            },
+        });
+    };
+
     handleOpenCreateAccountDialog = () => {
         this.setState({
             accountDialog: true,
             accountData: emptyAccount,
+        });
+    };
+
+    handleOpenCreateTransactionDialog = () => {
+        this.setState({
+            transactionDialog: true,
+            transactionData: emptyTransaction,
         });
     };
 
@@ -288,6 +333,13 @@ class Accounts extends React.Component<Props, State> {
         this.setState({
             accountDialog: false,
             accountData: emptyAccount,
+        });
+    };
+
+    handleCloseTransactionDialog = (e: React.SyntheticEvent<any>) => {
+        this.setState({
+            transactionDialog: false,
+            transactionData: emptyTransaction,
         });
     };
 
@@ -328,6 +380,8 @@ class Accounts extends React.Component<Props, State> {
             accountDialog: false,
         });
     };
+
+    handleSaveTransaction = () => {};
 }
 
 const mapState = (state: Store): MapStateProps => ({

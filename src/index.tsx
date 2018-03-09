@@ -9,6 +9,17 @@ import './index.css';
 
 import App from './components/App';
 
+store.dispatch({
+    type: 'ACCOUNT__CREATE',
+    payload: {
+        id: 'acc1',
+        name: 'Sparkasse',
+        balance: 123.45,
+        createdAt: '',
+        updatedAt: '',
+    },
+});
+
 ReactDOM.render(
     <Provider store={store}>
         <Router>
