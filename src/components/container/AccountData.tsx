@@ -18,7 +18,7 @@ interface Props {
 }
 
 const isDisabled = (props: Props): boolean =>
-    !props.accountData.name || !props.accountData.balance;
+    !props.accountData.name;
 
 const AccountData: React.StatelessComponent<Props> = props => {
     const title = props.accountData.id ? 'Edit Account' : 'Create Account';
@@ -48,7 +48,7 @@ const AccountData: React.StatelessComponent<Props> = props => {
                             fluid={true}
                             onChange={props.onChange}
                             label="Balance"
-                            value={props.accountData.balance}
+                            value={props.accountData.balance.toString()}
                         />
                     </Grid.Column>
                 </Grid>

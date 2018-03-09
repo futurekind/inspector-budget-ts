@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as selectors from '../accounts';
 
 const state = {
@@ -32,12 +33,14 @@ const state = {
 describe('Accounts Selectors', () => {
     describe('getResults()', () => {
         it('returns state', () => {
+            // @ts-ignore
             expect(selectors.getResults(state)).toEqual(state.accounts.results);
         });
     });
 
     describe('getResults()', () => {
         it('returns state', () => {
+            // @ts-ignore
             expect(selectors.getEntities(state)).toEqual(
                 state.accounts.entities
             );
@@ -46,6 +49,7 @@ describe('Accounts Selectors', () => {
 
     describe('makeSortedResults', () => {
         it('returns function', () => {
+            // @ts-ignore
             const getResultsSortedBy = selectors.makeSortedResults(state);
 
             expect(getResultsSortedBy('name')).toEqual([

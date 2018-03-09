@@ -6,6 +6,7 @@ import { v4 } from 'uuid';
 
 // Types
 import { Account } from '../../types/account';
+import { Transaction } from '../../types/transactions';
 import { Store } from '../../types/store';
 
 // Sematic UI
@@ -18,6 +19,8 @@ import {
     Icon,
     Header,
     Modal,
+    Segment,
+    SemanticICONS,
 } from 'semantic-ui-react';
 
 // Container
@@ -25,6 +28,7 @@ import AccountData from '../container/AccountData';
 
 // Selectors
 import * as accountSelectors from '../../selectors/accounts';
+import * as taSelectors from '../../selectors/transactions';
 
 // Actions
 import * as accountActions from '../../actions/accounts';
@@ -34,6 +38,12 @@ interface MapStateProps {
         results: string[];
         entities: {
             [id: string]: Account;
+        };
+    };
+    transactions: {
+        results: string[];
+        entities: {
+            [id: string]: Transaction;
         };
     };
 }
@@ -55,6 +65,19 @@ const emptyAccount: Account = {
     createdAt: '',
     updatedAt: '',
 };
+
+const ActionButton = (props: {
+    show: boolean;
+    onClick: () => void;
+    iconName: SemanticICONS;
+}) => {
+    if (!props.show) return null;
+    return (
+        <Button icon={true} onClick={props.onClick}>
+            <Icon name={props.iconName} />
+        </Button>
+    );
+};
 class Accounts extends React.Component<Props, State> {
     state = {
         accountDialog: false,
@@ -71,25 +94,6 @@ class Accounts extends React.Component<Props, State> {
                 accountToDelete: match.params.id,
             });
 
-        const DeleteButton = (props: { show: boolean }) => {
-            if (!props.show) return null;
-            return (
-                <Button icon={true} onClick={handleDelete}>
-                    <Icon name="minus" />
-                </Button>
-            );
-        };
-
-        const EditButton = (props: { show: boolean }) => {
-            if (!props.show) return null;
-
-            return (
-                <Button icon={true} onClick={this.handleOpenEditAccountDialog}>
-                    <Icon name="edit" />
-                </Button>
-            );
-        };
-
         if (match.params.id === 'index' && results.length > 0)
             return <Redirect to={`/accounts/${results[0]}`} />;
 
@@ -105,25 +109,26 @@ class Accounts extends React.Component<Props, State> {
 
                         <Container textAlign="right">
                             <Button.Group basic={true}>
-                                <DeleteButton
+                                <ActionButton
                                     show={match.params.id !== 'index'}
+                                    onClick={handleDelete}
+                                    iconName="minus"
                                 />
-                                <EditButton
+                                <ActionButton
                                     show={match.params.id !== 'index'}
+                                    onClick={this.handleOpenEditAccountDialog}
+                                    iconName="edit"
                                 />
-                                <Button
-                                    icon={true}
+                                <ActionButton
+                                    show={true}
                                     onClick={this.handleOpenCreateAccountDialog}
-                                >
-                                    <Icon name="plus" />
-                                </Button>
+                                    iconName="plus"
+                                />
                             </Button.Group>
                         </Container>
                     </Grid.Column>
 
-                    <Grid.Column mobile={16} tablet={11} computer={11}>
-                        <Header sub={true}>Transactions</Header>
-                    </Grid.Column>
+                    {this.renderTransactions()}
 
                     <AccountData
                         open={this.state.accountDialog}
@@ -214,6 +219,33 @@ class Accounts extends React.Component<Props, State> {
         return null;
     }
 
+    renderZeroTransactionResults() {
+        return <p>No Transactions</p>;
+    }
+
+    renderTransactions() {
+        const { accounts } = this.props;
+
+        if (accounts.results.length === 0) return;
+
+        return (
+            <Grid.Column mobile={16} tablet={11} computer={11}>
+                <Header sub={true}>Transactions</Header>
+                <Segment>{this.renderZeroTransactionResults()}</Segment>
+
+                <Container textAlign="right">
+                    <Button.Group basic={true}>
+                        <ActionButton
+                            show={true}
+                            onClick={this.handleOpenCreateAccountDialog}
+                            iconName="plus"
+                        />
+                    </Button.Group>
+                </Container>
+            </Grid.Column>
+        );
+    }
+
     handleClickAccountMenuItem = (e: any, props: { name: string }) => {
         const { name } = props;
         const { history } = this.props;
@@ -302,6 +334,10 @@ const mapState = (state: Store): MapStateProps => ({
     accounts: {
         results: accountSelectors.makeSortedResults(state)('createdAt'),
         entities: accountSelectors.getEntities(state),
+    },
+    transactions: {
+        results: taSelectors.makeGetSortedResults(state)('date'),
+        entities: taSelectors.getEntities(state),
     },
 });
 
