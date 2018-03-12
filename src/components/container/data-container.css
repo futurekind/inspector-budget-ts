@@ -1,0 +1,11 @@
+.data-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+}
+
+@media (min-width: 40em) {
+    .data-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}

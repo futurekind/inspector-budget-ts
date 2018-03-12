@@ -1,10 +1,12 @@
 import * as React from 'react';
 
 // UI
-import { Modal, Grid, Button } from 'semantic-ui-react';
+import { Modal, Button } from 'semantic-ui-react';
 
 // Types
 import { Transaction } from '../../types/transactions';
+
+import './data-container.css';
 
 interface Props {
     open: boolean;
@@ -32,10 +34,10 @@ const TransactionData: React.StatelessComponent<Props> = props => {
         >
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
-                <Grid>
-                    <Grid.Column mobile={16} tablet={8} computer={8} />
-                    <Grid.Column mobile={16} tablet={8} computer={8} />
-                </Grid>
+                <div className="data-container">
+                    <div>HAllp</div>
+                    <div>Pellso</div>
+                </div>
             </Modal.Content>
             <Modal.Actions>
                 <Button onClick={props.onClose}>Cancel</Button>

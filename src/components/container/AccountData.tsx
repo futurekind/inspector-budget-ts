@@ -1,7 +1,9 @@
 import * as React from 'react';
 
 // UI
-import { Modal, Input, Grid, Button } from 'semantic-ui-react';
+import { Modal, Input, Button } from 'semantic-ui-react';
+
+import './data-container.css';
 
 // Types
 import { Account } from '../../types/account';
@@ -17,8 +19,7 @@ interface Props {
     onSave: () => void;
 }
 
-const isDisabled = (props: Props): boolean =>
-    !props.accountData.name;
+const isDisabled = (props: Props): boolean => !props.accountData.name;
 
 const AccountData: React.StatelessComponent<Props> = props => {
     const title = props.accountData.id ? 'Edit Account' : 'Create Account';
@@ -31,27 +32,24 @@ const AccountData: React.StatelessComponent<Props> = props => {
         >
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
-                <Grid>
-                    <Grid.Column mobile={16} tablet={8} computer={8}>
-                        <Input
-                            name="name"
-                            fluid={true}
-                            onChange={props.onChange}
-                            label="Name"
-                            value={props.accountData.name}
-                        />
-                    </Grid.Column>
-                    <Grid.Column mobile={16} tablet={8} computer={8}>
-                        <Input
-                            name="balance"
-                            type="number"
-                            fluid={true}
-                            onChange={props.onChange}
-                            label="Balance"
-                            value={props.accountData.balance.toString()}
-                        />
-                    </Grid.Column>
-                </Grid>
+                <div className="data-container">
+                    <Input
+                        name="name"
+                        fluid={true}
+                        onChange={props.onChange}
+                        label="Name"
+                        value={props.accountData.name}
+                    />
+
+                    <Input
+                        name="balance"
+                        type="number"
+                        fluid={true}
+                        onChange={props.onChange}
+                        label="Balance"
+                        value={props.accountData.balance.toString()}
+                    />
+                </div>
             </Modal.Content>
             <Modal.Actions>
                 <Button onClick={props.onClose}>Cancel</Button>
