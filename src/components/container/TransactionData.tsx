@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // UI
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Button, Input, Dropdown, Form } from 'semantic-ui-react';
 
 // Types
 import { Transaction } from '../../types/transactions';
@@ -21,6 +21,8 @@ interface Props {
 
 const isDisabled = (props: Props): boolean => false;
 
+const payeeOptions = [{ value: 'fab', text: 'Fabian' }];
+
 const TransactionData: React.StatelessComponent<Props> = props => {
     const title = props.transactionData.id
         ? 'Edit Transaction'
@@ -35,8 +37,52 @@ const TransactionData: React.StatelessComponent<Props> = props => {
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
                 <div className="data-container">
-                    <div>HAllp</div>
-                    <div>Pellso</div>
+                    <Form.Field
+                        label="Date"
+                        type="date"
+                        name="date"
+                        value={props.transactionData.date}
+                        onChange={props.onChange}
+                        control={Input}
+                        fluid={true}
+                        required={true}
+                    />
+
+                    <Form.Field
+                        label="Volume"
+                        type="number"
+                        name="volume"
+                        value={props.transactionData.volume}
+                        onChange={props.onChange}
+                        control={Input}
+                        fluid={true}
+                        required={true}
+                    />
+
+                    <Form.Field
+                        name="payee"
+                        label="Payee"
+                        onChange={props.onChange}
+                        value={props.transactionData.payeeId}
+                        options={payeeOptions}
+                        selection={true}
+                        search={true}
+                        fluid={true}
+                        control={Dropdown}
+                    />
+
+                    <Form.Field
+                        name="categoryId"
+                        label="Category"
+                        onChange={props.onChange}
+                        value={props.transactionData.categoryId}
+                        options={payeeOptions}
+                        selection={true}
+                        search={true}
+                        fluid={true}
+                        control={Dropdown}
+                        required={true}
+                    />
                 </div>
             </Modal.Content>
             <Modal.Actions>

@@ -313,9 +313,13 @@ class Accounts extends React.Component<Props, State> {
     };
 
     handleOpenCreateTransactionDialog = () => {
+        const { match } = this.props;
         this.setState({
             transactionDialog: true,
-            transactionData: emptyTransaction,
+            transactionData: {
+                ...emptyTransaction,
+                accountId: match.params.id,
+            },
         });
     };
 
