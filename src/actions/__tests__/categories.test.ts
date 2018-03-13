@@ -38,4 +38,13 @@ describe('Categories Actions', () => {
             });
         });
     });
+
+    describe('remove()', () => {
+        it('returns action', () => {
+            expect(actions.remove('some-id')).toEqual({
+                type: actions.CAT__DELETE,
+                payload: 'some-id',
+            });
+        });
+    });
 });
