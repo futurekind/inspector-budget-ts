@@ -9,7 +9,7 @@ export type CAT__UPDATE = typeof CAT__UPDATE;
 export const CAT__DELETE = 'CAT__DELETE';
 export type CAT__DELETE = typeof CAT__DELETE;
 
-interface Action {
+export interface Action {
     type: CAT__CREATE | CAT__UPDATE | CAT__DELETE;
     payload: Category | string;
 }
