@@ -19,4 +19,23 @@ describe('Categories Actions', () => {
             });
         });
     });
+
+    describe('update()', () => {
+        it('returns action', () => {
+            expect(
+                actions.update({
+                    id: 'some',
+                    label: 'My Category 2',
+                    parent: 'foo',
+                })
+            ).toEqual({
+                type: actions.CAT__UPDATE,
+                payload: {
+                    id: 'some',
+                    label: 'My Category 2',
+                    parent: 'foo',
+                },
+            });
+        });
+    });
 });
